@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/stylesheet.css" />
+    <script src="vendor/jquery.min.js"></script>
+    <script src="scripts/client.js"></script>
+    <title></title>
+  </head>
+  <body>
+      <div class="container">
+          <div class="page-header">
+              <h1 class="text-center" >My TODOS</h1>
+        </div>
+      <div class="row">
+
+              <div class="col-md-6 col-sm-offset-3">
+                  <div class="input-group input-group-lg ">
+                      <input type="text" class="form-control" id="new_todo" name="to_do_input" placeholder="what needs to be done?" />
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" id="addNew">Add</button>
+                      </span>
+                  </div>
+              </div>
+
+        </div>
+        <div >
+            <h3 class="text-center" >Things to do</h3>
+      </div>
+        <div class="row">
+        
+            <div class="col-md-6 col-sm-offset-3">
+                <ul class="list-unstyled" id="list">
+
+                </ul>
+                <div id="confirmDelete">
+
+                </div>
+            </div>
+            <div class="col-xs-5"></div>
+        </div>
+
+    </div>
+  </body>
+</html>
