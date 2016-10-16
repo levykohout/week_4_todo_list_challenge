@@ -1,9 +1,11 @@
 $(function(){
     getList();
+    getCompletedList();
     $('#addNew').on('click',addTodo);
     $('#list').on('click','.save', updateTodo);
     $('#list').on('click','.delete', deleteTodo);
     $('#list').on('click', 'input[type=checkbox]',completeTodo);
+    $('#completed').on('click', 'input[type=checkbox]', updateTodo);
 
 
 });
@@ -26,11 +28,11 @@ function displayList(lists){
         var $form =$('<form></form>');
         var $group=$('<div class="input-group input-group-lg "></div>');
 
-        $group.append('<span class="input-group-addon"><input type="checkbox" class="complete btn btn-default" data-id="'+list.id+'"></input></span>');
+        $group.append('<span class="input-group-addon"><input type="checkbox" class="complete btn btn-default checked" data-id="'+list.id+'"></input></span>');
         $group.append('<input type="text" class="form-control" name="task" value="'+list.task+'">');
         var $span=$('<span class="input-group-btn"></div>');
-        $span.append('<button type="button" class="save btn btn-default" data-id="'+list.id+'">Save</button>');
-        $span.append('<button type="button" class="delete btn btn-default" data-id="'+list.id+'">Delete</button>');
+        $span.append('<button type="button" class="save btn btn-primary" data-id="'+list.id+'">Save</button>');
+        $span.append('<button type="button" class="delete btn btn-primary" data-id="'+list.id+'">Delete</button>');
         $group.append($span);
         $form.append($group);
         $li.append($form);
@@ -39,6 +41,7 @@ function displayList(lists){
 
     });
 }
+
 
 function addTodo(event){
     event.preventDefault();
@@ -58,16 +61,27 @@ function addTodo(event){
 
 }
 
-function updateTodo(event){
-    event.preventDefault();
+function updateTodo(){
+
     var $button = $(this);
-    var taskData=$button.closest('form').serialize();
-    console.log(taskData);
+    // var taskData=$button.closest('form').serialize();
+    var task = $button.closest('form').find('input[name="task"]').val();
+    var completeStatus = $button.closest('form').find('.complete').is(":checked"); //checks if complete checkbox is checked
+        if(completeStatus==true){
+            completeStatus=!completeStatus
+        }
+
+    console.log(task);
+    console.log(completeStatus);
+    var taskData = {task:task, complete: completeStatus};
     $.ajax({
         type:'PUT',
-        url:'/todo/'+$button.data('id'),
+        url:'/todo/'+$(this).data('id'),
         data:taskData,
-        success:getList
+        success:function(){
+            getList();
+            getCompletedList();
+        }
 
     });
 
@@ -88,14 +102,57 @@ function deleteTodo(){
 }
 
 function completeTodo() {
-    var $button=$(this);
+    event.preventDefault();
+    var $button = $(this);
+    // var taskData=$button.closest('form').serialize();
+    var task = $button.closest('form').find('input[name="task"]').val();
+    var completeStatus = $button.closest('form').find('.complete').is(":checked"); //checks if complete checkbox is checked
+    console.log(task);
+    console.log(completeStatus);
+    var taskData = {task:task, complete: completeStatus};
+    $.ajax({
+        type:'PUT',
+        url:'/complete/'+$button.data('id'),
+        data:taskData,
+        success: function (){
+            getCompletedList();
+            getList();
+        }
+    });
 
-     if($button.is(':checked')){
-         $button.closest('form').css('background-color','red');
-      console.log('checked');
-  }else{
-      console.log('not checked');
-       $button.closest('form').css('background-color','white');
 }
+
+function getCompletedList(){
+    $.ajax({
+     type:'GET',
+     url:'/complete',
+     success: displayCompletedList
+
+    });
+}
+
+function displayCompletedList(lists){
+
+    $('#completed').empty();
+    console.log(lists);
+    lists.forEach(function(list){
+
+        var $li= $('<li></li>');
+        var $form =$('<form></form>');
+        var $group=$('<div class="input-group input-group-lg "></div>');
+
+        $group.append('<span class="input-group-addon"><input type="checkbox" class="complete btn btn-default checked" data-id="'+list.id+'"></input></span>');
+        $group.append('<input type="text" class="form-control completed" name="task" value="'+list.task+'">');
+        // var $span=$('<span class="input-group-btn"></div>');
+        // $span.append('<button type="button" class="save btn btn-primary" data-id="'+list.id+'">Save</button>');
+        // $span.append('<button type="button" class="delete btn btn-primary" data-id="'+list.id+'">Delete</button>');
+        // $group.append($span);
+        $form.append($group);
+        $li.append($form);
+        $('#completed').append($li);
+
+
+    });
+
 
 }

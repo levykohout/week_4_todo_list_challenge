@@ -7,33 +7,33 @@ var config ={
 
 var pool = new pg.Pool(config);
 
-router.post('/', function(req, res){
-    console.log(req.body);
-
-var complete = false;
-    pool.connect(function(err, client, done){
-        if(err){
-            console.log('Error connecting to the DB', err);
-            res.sendStatus(500);
-            done();
-            return;
-        }
-
-    client.query('INSERT INTO todo2 (task,complete) VALUES ($1, $2) returning *;', [req.body.task,complete],  function(err, result){
-        done();
-        if(err){
-            console.log('Error connecting to the DB', err);
-            res.sendStatus(500);
-
-            return;
-        }
-
-        console.log('Got rows from the DB:',result.rows);
-        res.send(result.rows);
-
-    });
-    });
-    });
+// router.post('/', function(req, res){
+//     console.log(req.body);
+//
+// var complete = false;
+//     pool.connect(function(err, client, done){
+//         if(err){
+//             console.log('Error connecting to the DB', err);
+//             res.sendStatus(500);
+//             done();
+//             return;
+//         }
+//
+//     client.query('INSERT INTO todo2 (task,complete) VALUES ($1, $2) returning *;', [req.body.task,complete],  function(err, result){
+//         done();
+//         if(err){
+//             console.log('Error connecting to the DB', err);
+//             res.sendStatus(500);
+//
+//             return;
+//         }
+//
+//         console.log('Got rows from the DB:',result.rows);
+//         res.send(result.rows);
+//
+//     });
+//     });
+//     });
 
 
 router.get('/', function(req, res){
@@ -46,7 +46,7 @@ router.get('/', function(req, res){
             return;
         }
 
-        client.query('SELECT * FROM todo2 where complete = false', function(err, result){
+        client.query('SELECT * FROM todo2 where complete = true', function(err, result){
             done();
             if(err){
                 console.log('Error connecting to the DB', err);

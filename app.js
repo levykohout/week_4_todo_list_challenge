@@ -4,11 +4,13 @@ var path = require('path');
 var app = express();
 
 var todoRouter = require('./routes/todo');
+var completedRouter = require('./routes/complete');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 app.use('/todo', todoRouter);
+app.use('/complete',completedRouter);
 
 // serve the index page at /
 app.get('/', function (req, res) {

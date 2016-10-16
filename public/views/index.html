@@ -10,12 +10,12 @@
   </head>
   <body>
       <div class="container">
-          <div class="page-header">
-              <h1 class="text-center" >My TODOS</h1>
+          <div class="col-md-8 col-sm-offset-2 jumbotron">
+              <h1 class="text-center" >My To Dos</h1>
         </div>
-      <div class="row">
+      <div class="row jumbotron">
 
-              <div class="col-md-6 col-sm-offset-3">
+              <div class="col-md-8 col-sm-offset-2">
                   <div class="input-group input-group-lg ">
                       <input type="text" class="form-control" id="new_todo" name="to_do_input" placeholder="what needs to be done?" />
                       <span class="input-group-btn">
@@ -28,15 +28,22 @@
         <div >
             <h3 class="text-center" >Things to do</h3>
       </div>
-        <div class="row">
-        
-            <div class="col-md-6 col-sm-offset-3">
+        <div class="row jumbotron">
+
+            <div class="col-md-8 col-sm-offset-2">
                 <ul class="list-unstyled" id="list">
 
                 </ul>
-                <div id="confirmDelete">
+        </div>
+    </div>
+        <div >
+            <h3 class="text-center" >Completed to dos</h3>
+      </div>
+        <div class="row jumbotron">
+            <div class="col-md-8 col-sm-offset-2">
+                <ul id="completed" class="list-unstyled">
 
-                </div>
+                </ul>
             </div>
             <div class="col-xs-5"></div>
         </div>
