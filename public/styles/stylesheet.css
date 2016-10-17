@@ -5,3 +5,7 @@ input[type="checkbox"] {
 .completed {
     text-decoration:line-through !important;
 }
+
+img {
+    width:180px;
+}
